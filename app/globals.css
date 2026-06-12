@@ -1,0 +1,58 @@
+:root {
+  --mm-red: #c1121f;
+  --mm-dark: #1a1a2e;
+  --mm-gray: #f4f4f6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--mm-dark);
+  background: #fff;
+  line-height: 1.6;
+}
+
+.container { max-width: 960px; margin: 0 auto; padding: 0 1.25rem; }
+
+.site-header {
+  background: var(--mm-dark);
+  color: #fff;
+  padding: 1rem 0;
+}
+.site-header .container { display: flex; justify-content: space-between; align-items: center; }
+.brand { font-weight: 800; font-size: 1.25rem; letter-spacing: 0.02em; }
+.brand span { color: var(--mm-red); }
+
+.hero {
+  background: linear-gradient(135deg, var(--mm-dark) 0%, #2d2d4e 100%);
+  color: #fff;
+  padding: 4rem 0;
+  text-align: center;
+}
+.hero h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+.hero p { opacity: 0.85; max-width: 540px; margin: 0 auto; }
+
+.lineup { padding: 3rem 0; }
+.lineup h2 { margin-bottom: 1.5rem; }
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.car-card {
+  background: var(--mm-gray);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+.car-card h3 { margin-bottom: 0.25rem; }
+.car-card .type { font-size: 0.85rem; color: #666; }
+.car-card .price { margin-top: 0.5rem; font-weight: 700; color: var(--mm-red); }
+
+.site-footer {
+  border-top: 1px solid #e5e5ea;
+  padding: 1.5rem 0;
+  font-size: 0.85rem;
+  color: #777;
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import { cars } from "@/lib/cars";
+import { getFeaturedCars } from "@/lib/cars";
 
 export default function HomePage() {
   return (
@@ -17,7 +17,7 @@ export default function HomePage() {
         <div className="container">
           <h2>Lineup Kami</h2>
           <div className="car-grid">
-            {cars.map((car) => (
+            {getFeaturedCars().map((car) => (
               <div className="car-card" key={car.slug}>
                 <h3>{car.name}</h3>
                 <div className="type">{car.type}</div>

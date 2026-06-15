@@ -15,3 +15,10 @@ export const cars: Car[] = [
   { slug: "mm-family",  name: "MM Family",  type: "MPV",      priceFrom: "Rp 265 juta" },
   { slug: "mm-ev",      name: "MM EV One",  type: "Electric", priceFrom: "Rp 480 juta" },
 ];
+
+// Lineup yang ditampilkan di homepage ("Lineup Kami").
+// Catatan: MM EV One sempat berstatus "coming soon" dan sementara
+// disembunyikan dari homepage lewat filter di bawah.
+export function getFeaturedCars(): Car[] {
+  return cars.filter((car) => car.type !== "Electric");
+}

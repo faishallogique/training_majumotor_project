@@ -1,12 +1,15 @@
-// Prisma schema — baseline kosong.
-// Model Booking akan ditambahkan saat implementasi tiket TMM-5
-// (Buat API route + penyimpanan data booking).
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
+}
+
+model StaffUser {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  hashedPassword String
+  createdAt      DateTime @default(now())
 }

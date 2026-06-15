@@ -23,6 +23,13 @@ Website company profile PT Maju Motor (klien fiktif — project training interna
 - Untuk **bug fixing** (`/fix`): ikuti TDD SOP B-3 — tulis dulu test yang **mereproduksi** bug
   (harus gagal), baru perbaiki kodenya hingga test lulus.
 
+## E2E
+- Framework: **Playwright**
+- Execution: host (macOS)
+- Config: `playwright.config.ts` — baseURL `http://localhost:3000`
+- Command: `npx playwright test` (or `npx playwright test --ui` for debug)
+- Tests: `e2e/` directory
+
 ## Task tracking
 Tiket ada di Logitask project **TMM (TRAINING - Maju Motor)**. Ambil detail tiket
 (acceptance criteria, definition of done) via Logitask MCP sebelum mulai implementasi.

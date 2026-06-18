@@ -23,6 +23,19 @@ test.describe('Staff Authentication', () => {
     await expect(page).toHaveURL(/\/login/);
   });
 
+  test('AC-4: logged-in staff yang visit /login di-redirect ke /admin', async ({ page }) => {
+    // Login dulu
+    await page.goto('/login');
+    await page.fill('input[name="email"]', 'staff@majumotor.com');
+    await page.fill('input[name="password"]', 'password123');
+    await page.click('button[type="submit"]');
+    await expect(page).toHaveURL(/\/admin/);
+
+    // Visit /login lagi — harus redirect ke /admin
+    await page.goto('/login');
+    await expect(page).toHaveURL(/\/admin/);
+  });
+
   test('AC-5: logout menghapus sesi dan redirect ke /login', async ({ page }) => {
     // Login dulu
     await page.goto('/login');

@@ -13,3 +13,30 @@ model StaffUser {
   hashedPassword String
   createdAt      DateTime @default(now())
 }
+
+model TimeSlot {
+  id        String    @id @default(cuid())
+  dateTime  DateTime
+  capacity  Int
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+}
+
+model Booking {
+  id            String           @id @default(cuid())
+  customerName  String
+  customerPhone String
+  customerEmail String
+  customerKtp   String
+  timeSlotId    String
+  timeSlot      TimeSlot         @relation(fields: [timeSlotId], references: [id])
+  vehicles      BookingVehicle[]
+  createdAt     DateTime         @default(now())
+}
+
+model BookingVehicle {
+  id          String  @id @default(cuid())
+  bookingId   String
+  booking     Booking @relation(fields: [bookingId], references: [id])
+  vehicleSlug String
+}

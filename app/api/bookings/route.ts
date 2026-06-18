@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 
+export async function GET(_req: Request) {
+  return NextResponse.json({ error: 'Not implemented' }, { status: 501 });
+}
+
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const { customerName, customerPhone, customerEmail, customerKtp, timeSlotId, vehicleSlugs } = body;

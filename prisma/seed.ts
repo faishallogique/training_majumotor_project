@@ -16,6 +16,26 @@ async function main() {
   });
 
   console.log(`Seeded staff: ${staff.email}`);
+
+  // Seed time slots: next 7 days × 3 time slots per day
+  await prisma.bookingVehicle.deleteMany();
+  await prisma.booking.deleteMany();
+  await prisma.timeSlot.deleteMany();
+  const slotTimes = ['09:00', '11:00', '14:00'];
+  let slotCount = 0;
+
+  for (let dayOffset = 1; dayOffset <= 7; dayOffset++) {
+    for (const time of slotTimes) {
+      const [hour, minute] = time.split(':').map(Number);
+      const dateTime = new Date();
+      dateTime.setDate(dateTime.getDate() + dayOffset);
+      dateTime.setHours(hour, minute, 0, 0);
+      await prisma.timeSlot.create({ data: { dateTime, capacity: 2 } });
+      slotCount++;
+    }
+  }
+
+  console.log(`Seeded ${slotCount} time slots`);
 }
 
 main()

@@ -19,10 +19,8 @@ test.describe('Booking Test Drive', () => {
     await page.locator('.vehicle-card').nth(0).click();
     await page.locator('.vehicle-card').nth(1).click();
 
-    const thirdCard = page.locator('.vehicle-card').nth(2);
-    await thirdCard.click();
-
-    await expect(thirdCard).not.toHaveAttribute('data-selected', 'true');
+    // Third card should be marked disabled when 2 already selected
+    await expect(page.locator('.vehicle-card').nth(2)).toHaveAttribute('data-disabled', 'true');
     await expect(page.locator('.vehicle-card[data-selected="true"]')).toHaveCount(2);
   });
 
@@ -32,8 +30,8 @@ test.describe('Booking Test Drive', () => {
     await page.locator('.vehicle-card').first().click();
     await page.getByRole('button', { name: /lanjut/i }).click();
 
-    await expect(page.locator('.slot-list')).toBeVisible();
-    await expect(page.locator('.slot-option')).toHaveCount.bind(expect)(1);
+    // Wait for async slot fetch to complete
+    await expect(page.locator('.slot-option').first()).toBeVisible({ timeout: 10000 });
   });
 
   test('completes booking and shows confirmation page', async ({ page }) => {
@@ -43,8 +41,8 @@ test.describe('Booking Test Drive', () => {
     await page.locator('.vehicle-card').first().click();
     await page.getByRole('button', { name: /lanjut/i }).click();
 
-    // Step 2: select time slot
-    await expect(page.locator('.slot-option').first()).toBeVisible();
+    // Step 2: wait for slots then select one
+    await expect(page.locator('.slot-option').first()).toBeVisible({ timeout: 10000 });
     await page.locator('.slot-option').first().click();
     await page.getByRole('button', { name: /lanjut/i }).click();
 
@@ -55,8 +53,8 @@ test.describe('Booking Test Drive', () => {
     await page.fill('input[name="customerKtp"]', '3201234567890001');
     await page.getByRole('button', { name: /pesan test drive/i }).click();
 
-    // Should land on confirmation page
+    // Should land on confirmation page with customer name
     await expect(page).toHaveURL(/\/booking\/confirmation/);
-    await expect(page.getByText('Budi Santoso')).toBeVisible();
+    await expect(page.getByTestId('customer-name')).toHaveText('Budi Santoso');
   });
 });

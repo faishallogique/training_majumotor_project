@@ -7,15 +7,17 @@ vi.mock('@/lib/db', () => ({
     },
     booking: {
       create: vi.fn(),
+      findMany: vi.fn(),
     },
   },
 }));
 
-import { POST } from './route';
+import { GET, POST } from './route';
 import { prisma } from '@/lib/db';
 
 const mockSlotFindUnique = prisma.timeSlot.findUnique as ReturnType<typeof vi.fn>;
 const mockBookingCreate = prisma.booking.create as ReturnType<typeof vi.fn>;
+const mockBookingFindMany = prisma.booking.findMany as ReturnType<typeof vi.fn>;
 
 const validBody = {
   customerName: 'Budi Santoso',
@@ -40,6 +42,47 @@ const availableSlot = {
   capacity: 2,
   _count: { bookings: 1 },
 };
+
+describe('GET /api/bookings', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('returns 200 with bookings array', async () => {
+    mockBookingFindMany.mockResolvedValue([
+      {
+        id: 'booking-1',
+        customerName: 'Budi Santoso',
+        customerPhone: '081234567890',
+        customerEmail: 'budi@example.com',
+        customerKtp: '3201234567890001',
+        timeSlotId: 'slot-1',
+        createdAt: new Date('2026-06-18T10:00:00.000Z'),
+        vehicles: [{ id: 'bv-1', bookingId: 'booking-1', vehicleSlug: 'mm-city' }],
+        timeSlot: { id: 'slot-1', dateTime: new Date('2026-06-20T09:00:00.000Z'), capacity: 2 },
+      },
+    ]);
+
+    const res = await GET(new Request('http://localhost/api/bookings'));
+
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.bookings).toHaveLength(1);
+    expect(body.bookings[0].customerName).toBe('Budi Santoso');
+    expect(body.bookings[0].vehicles).toHaveLength(1);
+    expect(body.bookings[0].timeSlot).toBeDefined();
+  });
+
+  it('returns 200 with empty array when no bookings', async () => {
+    mockBookingFindMany.mockResolvedValue([]);
+
+    const res = await GET(new Request('http://localhost/api/bookings'));
+
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.bookings).toHaveLength(0);
+  });
+});
 
 describe('POST /api/bookings', () => {
   beforeEach(() => {

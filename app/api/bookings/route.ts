@@ -1,6 +1,18 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 
+export async function GET(_req: Request) {
+  const bookings = await prisma.booking.findMany({
+    include: {
+      vehicles: true,
+      timeSlot: true,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return NextResponse.json({ bookings });
+}
+
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const { customerName, customerPhone, customerEmail, customerKtp, timeSlotId, vehicleSlugs } = body;

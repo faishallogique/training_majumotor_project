@@ -2,7 +2,15 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 
 export async function GET(_req: Request) {
-  return NextResponse.json({ error: 'Not implemented' }, { status: 501 });
+  const bookings = await prisma.booking.findMany({
+    include: {
+      vehicles: true,
+      timeSlot: true,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return NextResponse.json({ bookings });
 }
 
 export async function POST(req: Request) {

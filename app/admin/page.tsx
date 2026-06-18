@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function AdminPage() {
@@ -22,7 +23,12 @@ export default function AdminPage() {
           Logout
         </button>
       </div>
-      <p>Selamat datang! Fitur manajemen booking akan tersedia di sini.</p>
+      <div className="admin-menu">
+        <Link href="/admin/bookings" className="admin-menu-card">
+          <h2>Daftar Booking</h2>
+          <p>Pantau booking test drive yang masuk dari customer.</p>
+        </Link>
+      </div>
     </main>
   );
 }

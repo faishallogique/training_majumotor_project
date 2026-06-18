@@ -22,8 +22,10 @@ test.describe('Admin Booking List', () => {
     await page.fill('input[name="email"]', 'staff@majumotor.com');
     await page.fill('input[name="password"]', 'password123');
     await page.click('button[type="submit"]');
+    await expect(page).toHaveURL(/\/admin/);
 
     await page.goto('/admin/bookings');
+    await expect(page.locator('.booking-list')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText(/nama customer/i)).toBeVisible();
     await expect(page.getByText(/kendaraan/i)).toBeVisible();
     await expect(page.getByText(/jadwal/i)).toBeVisible();

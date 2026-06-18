@@ -300,3 +300,54 @@ body {
   border-radius: 8px;
   padding: 0.65rem 0.85rem;
 }
+
+/* ── Admin menu ── */
+.admin-menu { display: flex; gap: 1rem; flex-wrap: wrap; }
+.admin-menu-card {
+  display: block;
+  background: var(--mm-gray);
+  border-radius: 10px;
+  padding: 1.5rem;
+  min-width: 220px;
+  text-decoration: none;
+  color: var(--mm-dark);
+  border: 2px solid transparent;
+  transition: border-color 0.15s;
+}
+.admin-menu-card:hover { border-color: var(--mm-red); }
+.admin-menu-card h2 { font-size: 1.1rem; margin-bottom: 0.35rem; color: var(--mm-red); }
+.admin-menu-card p { font-size: 0.85rem; color: #666; }
+
+/* ── Admin booking list ── */
+.booking-list { overflow-x: auto; }
+.booking-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.booking-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: var(--mm-dark);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.booking-table th:first-child { border-radius: 8px 0 0 0; }
+.booking-table th:last-child  { border-radius: 0 8px 0 0; }
+.booking-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e5ea;
+  vertical-align: top;
+}
+.booking-table tr:last-child td { border-bottom: none; }
+.booking-table tr:hover td { background: var(--mm-gray); }
+.booking-empty {
+  padding: 3rem;
+  text-align: center;
+  color: #999;
+  background: var(--mm-gray);
+  border-radius: 10px;
+}
